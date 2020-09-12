@@ -11,14 +11,14 @@ import java.util.List;
 @Service
 public class CommentService {
 
-    @Autowired private CommentRepository commentRepository;
+  @Autowired private CommentRepository commentRepository;
 
-    public Comment addComment(Comment comment) {
-        Comment newComment = commentRepository.addComment(comment);
-        return newComment;
-    }
+  public Comment addComment(Comment comment) {
+    Comment newComment = commentRepository.addComment(comment);
+    return newComment;
+  }
 
-    public List<Comment> getAllCommentsForImage(Image image) {
-        return commentRepository.getAllCommentsForImage(image);
-    }
+  public List<Comment> getAllCommentsForImage(Image image) {
+    return commentRepository.getAllCommentsForImage(image);
+  }
 }

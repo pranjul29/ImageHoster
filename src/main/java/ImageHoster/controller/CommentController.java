@@ -20,30 +20,30 @@ import java.util.List;
 @Controller
 public class CommentController {
 
-    @Autowired private CommentService commentService;
+  @Autowired private CommentService commentService;
 
-    @Autowired private ImageService imageService;
+  @Autowired private ImageService imageService;
 
-    @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
-    public String addComment(
-            @PathVariable("imageTitle") String imageTitle,
-            @PathVariable("imageId") String imageId,
-            Model model,
-            @RequestParam("comment") String comment,
-            HttpSession session,
-            Comment newComment) {
-        newComment.setCreatedDate(new Date());
-        newComment.setText(comment);
-        User user = (User) session.getAttribute("loggeduser");
-        newComment.setUser(user);
-        Image image = imageService.getImage(Integer.parseInt(imageId));
-        newComment.setImage(image);
+  @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
+  public String addComment(
+      @PathVariable("imageTitle") String imageTitle,
+      @PathVariable("imageId") String imageId,
+      Model model,
+      @RequestParam("comment") String comment,
+      HttpSession session,
+      Comment newComment) {
+    newComment.setCreatedDate(new Date());
+    newComment.setText(comment);
+    User user = (User) session.getAttribute("loggeduser");
+    newComment.setUser(user);
+    Image image = imageService.getImage(Integer.parseInt(imageId));
+    newComment.setImage(image);
 
-        newComment = commentService.addComment(newComment);
+    newComment = commentService.addComment(newComment);
 
-        List<Comment> allComments = commentService.getAllCommentsForImage(image);
-        model.addAttribute("comments", allComments);
-        model.addAttribute("tags", image.getTags());
-        return "redirect:/images" + "/" + imageId + "/" + imageTitle;
-    }
+    List<Comment> allComments = commentService.getAllCommentsForImage(image);
+    model.addAttribute("comments", allComments);
+    model.addAttribute("tags", image.getTags());
+    return "redirect:/images" + "/" + imageId + "/" + imageTitle;
+  }
 }
